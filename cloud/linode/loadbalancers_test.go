@@ -52,9 +52,10 @@ func TestCCMLoadBalancers(t *testing.T) {
 func testCreateNodeBalancer(t *testing.T, client *linodego.Client) {
 	svc := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:        randString(10),
-			UID:         "foobar123",
-			Annotations: map[string]string{},
+			Name:         randString(10),
+			GenerateName: "test",
+			UID:          "foobar123",
+			Annotations:  map[string]string{},
 		},
 		Spec: v1.ServiceSpec{
 			Ports: []v1.ServicePort{
@@ -92,8 +93,9 @@ func Test_getAlgorithm(t *testing.T) {
 			"algorithm should be least_connection",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeAlgorithm: "least_connections",
 					},
@@ -105,8 +107,9 @@ func Test_getAlgorithm(t *testing.T) {
 			"algorithm should be source",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeAlgorithm: "source",
 					},
@@ -118,8 +121,9 @@ func Test_getAlgorithm(t *testing.T) {
 			"algorithm should be round_robin",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeAlgorithm: "roundrobin",
 					},
@@ -131,8 +135,9 @@ func Test_getAlgorithm(t *testing.T) {
 			"invalid algorithm should default to round_robin",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeAlgorithm: "invalid",
 					},
@@ -144,8 +149,9 @@ func Test_getAlgorithm(t *testing.T) {
 			"no algorithm specified should default to round_robin",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 				},
 			},
 			linodego.AlgorithmRoundRobin,
@@ -219,8 +225,9 @@ b8QPmGZdja1VyGqpAMkPmQOu9N5RbhKw1UOU/XGa31p6v96oayL+u8Q=
 			"certificate set",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeSSLCertificate: base64.StdEncoding.EncodeToString([]byte(cert)),
 						annLinodeSSLKey:         base64.StdEncoding.EncodeToString([]byte(key)),
@@ -234,9 +241,10 @@ b8QPmGZdja1VyGqpAMkPmQOu9N5RbhKw1UOU/XGa31p6v96oayL+u8Q=
 			"certificate not set",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name:        randString(10),
-					UID:         "abc123",
-					Annotations: map[string]string{},
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
+					Annotations:  map[string]string{},
 				},
 			},
 			"",
@@ -272,8 +280,9 @@ func Test_getTLSPorts(t *testing.T) {
 			"tls port specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeTLSPorts: "443",
 					},
@@ -313,8 +322,9 @@ func Test_getProtocol(t *testing.T) {
 			"no protocol specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 				},
 			},
 			linodego.ProtocolTCP,
@@ -324,8 +334,9 @@ func Test_getProtocol(t *testing.T) {
 			"tcp protocol specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeProtocol: "http",
 					},
@@ -338,8 +349,9 @@ func Test_getProtocol(t *testing.T) {
 			"invalid protocol",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: randString(10),
-					UID:  "abc123",
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeProtocol: "invalid",
 					},
@@ -379,9 +391,10 @@ func Test_getHealthCheckType(t *testing.T) {
 			"no type specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name:        randString(10),
-					UID:         "abc123",
-					Annotations: map[string]string{},
+					Name:         randString(10),
+					GenerateName: "test",
+					UID:          "abc123",
+					Annotations:  map[string]string{},
 				},
 			},
 			linodego.CheckConnection,
@@ -391,8 +404,9 @@ func Test_getHealthCheckType(t *testing.T) {
 			"http specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: "test",
-					UID:  "abc123",
+					Name:         "test",
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeHealthCheckType: "http",
 					},
@@ -405,8 +419,9 @@ func Test_getHealthCheckType(t *testing.T) {
 			"invalid specified",
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: "test",
-					UID:  "abc123",
+					Name:         "test",
+					GenerateName: "test",
+					UID:          "abc123",
 					Annotations: map[string]string{
 						annLinodeHealthCheckType: "invalid",
 					},
@@ -487,8 +502,9 @@ func Test_getNodeInternalIp(t *testing.T) {
 func testBuildLoadBalancerRequest(t *testing.T, client *linodego.Client) {
 	svc := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "test",
-			UID:  "foobar123",
+			Name:         "test",
+			GenerateName: "test",
+			UID:          "foobar123",
 			Annotations: map[string]string{
 				annLinodeProtocol: "tcp",
 			},
@@ -540,8 +556,9 @@ func testBuildLoadBalancerRequest(t *testing.T, client *linodego.Client) {
 func testEnsureLoadBalancerDeleted(t *testing.T, client *linodego.Client) {
 	svc := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "test",
-			UID:  "foobar123",
+			Name:         "test",
+			GenerateName: "test",
+			UID:          "foobar123",
 			Annotations: map[string]string{
 				annLinodeProtocol: "tcp",
 			},
@@ -577,8 +594,9 @@ func testEnsureLoadBalancerDeleted(t *testing.T, client *linodego.Client) {
 			testClusterName,
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: "notexists",
-					UID:  "notexists123",
+					Name:         "notexists",
+					GenerateName: "test",
+					UID:          "notexists123",
 					Annotations: map[string]string{
 						annLinodeProtocol: "tcp",
 					},
@@ -620,8 +638,9 @@ func testEnsureLoadBalancerDeleted(t *testing.T, client *linodego.Client) {
 func testEnsureLoadBalancer(t *testing.T, client *linodego.Client) {
 	svc := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "testensure",
-			UID:  "foobar123",
+			Name:         "testensure",
+			GenerateName: "test",
+			UID:          "foobar123",
 			Annotations: map[string]string{
 				annLinodeProtocol: "tcp",
 			},
@@ -741,8 +760,9 @@ func testGetLoadBalancer(t *testing.T, client *linodego.Client) {
 	lb := &loadbalancers{client, "us-west", "test-pre-"}
 	svc := &v1.Service{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: "test",
-			UID:  "foobar123",
+			Name:         "test",
+			GenerateName: "test",
+			UID:          "foobar123",
 			Annotations: map[string]string{
 				annLinodeProtocol: "tcp",
 			},
@@ -782,8 +802,9 @@ func testGetLoadBalancer(t *testing.T, client *linodego.Client) {
 
 			&v1.Service{
 				ObjectMeta: metav1.ObjectMeta{
-					Name: "notexists",
-					UID:  "notexists123",
+					Name:         "notexists",
+					GenerateName: "test",
+					UID:          "notexists123",
 					Annotations: map[string]string{
 						annLinodeProtocol: "tcp",
 					},

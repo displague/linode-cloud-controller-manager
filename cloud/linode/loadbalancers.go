@@ -279,6 +279,14 @@ func (l *loadbalancers) GetLoadBalancerName(service *v1.Service) string {
 	// Linode NodeBalancer names must be 3-32 chars (letters, numbers, dashes, underscore)
 	ret := string(service.UID)
 	ret = strings.Replace(ret, "-", "", -1)
+	if len(service.GenerateName) > 0 {
+		ret = service.GenerateName + ret
+	}
+	// TODO what is the difference between service.ClusterName
+	// and the clusterName argument supplied everywhere?
+	if len(service.ClusterName) > 0 {
+		ret = service.ClusterName + "-" + ret
+	}
 
 	if len(l.nbPrefix) > 0 {
 		ret = l.nbPrefix + ret
