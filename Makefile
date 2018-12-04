@@ -1,9 +1,11 @@
 IMG ?= linode/linode-cloud-controller-manager:latest
+REV=$(shell git describe --long --tags --dirty)
 
 all: build
 
 build: fmt
-	go build -o dist/linode-cloud-controller-manager github.com/linode/linode-cloud-controller-manager
+	CGO_ENABLED=0 GOOS=linux go build -a -ldflags '-X main.vendorVersion=$(REV) -extldflags "-static"' \
+		-o dist/linode-cloud-controller-manager github.com/linode/linode-cloud-controller-manager
 
 run: build
 	dist/linode-cloud-controller-manager --logtostderr=true --stderrthreshold=INFO
